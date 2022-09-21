@@ -15,11 +15,13 @@ var gLevel = {
   SIZE: 4,
   MINES: 2
 }
+var gGameSteps = [] // will store a complete gBoard every time
 var gGame = {
   isOn: false,
   shownCount: 0,
   markedCount: 0,
-  secsPassed: 0
+  secsPassed: 0,
+  hints: 3
 }
 var gTimerIntervalId
 
@@ -96,18 +98,22 @@ function renderBoard(board) {
 function cellClicked(elCell, i, j) {
   const cell = gBoard[i][j]
   if (cell.isShown || cell.isMarked || !gGame.isOn) return
+  saveStep()
   if (cell.isMine) blowMine()
   
   cell.isShown = true
   gGame.shownCount++
   elCell.classList.add('shown')
+  // if cells around not falsy(0) and its not the first click
   if (!cell.minesAroundCount && gGame.shownCount !== 1) expandShown(gBoard, i, j)
+  // on first click
   if (gGame.shownCount === 1) {
-    placeMines(gBoard) // on first click
+    placeMines(gBoard)
     gTimerIntervalId = setInterval(renderTime, 1000)
   }
 
   renderCell({ i, j }, getCellIcon(cell))
+  !cell.isMine && checkGameOver()
 }
 
 function cellMarked(event, i, j) {
@@ -124,7 +130,7 @@ function cellMarked(event, i, j) {
 
 function renderTime() {
   const elTime = document.querySelector('.time')
-  elTime.innerText = 'Time: ' + ++gGame.secsPassed
+  elTime.innerText = 'Time(s): ' + ++gGame.secsPassed
 }
 
 function blowMine() {
@@ -134,13 +140,44 @@ function blowMine() {
 }
 
 function checkGameOver() {
-
+  var cellsToReveal = gLevel.SIZE ** 2 - gGame.shownCount
+  console.log(cellsToReveal, gLevel.SIZE ** 2);
+  if (cellsToReveal === gLevel.MINES) {
+    gameOver()
+    updateStatusBtn('HAPPY')
+    alert('Victory')
+  }
 }
 
 function gameOver() {
   gGame.isOn = false
   clearInterval(gTimerIntervalId)
+  gTimerIntervalId = null
   revealMines(gBoard)
+}
+
+function undoStep() {
+  if (gGameSteps.length === 0) return
+
+  const previusBoard = gGameSteps.pop()
+  gGame.shownCount-- // since we save just steps and steps are saved when isShown...
+  updateStatusBtn() // in case gameOver(Mine blowed), otherwise it doesn't matter
+  gBoard = previusBoard
+  renderBoard(gBoard)
+  if (!gTimerIntervalId) gTimerIntervalId = setInterval(renderTime, 1000) // continue timer in case of mine blow
+  gGame.isOn = true // in case gameOver(Mine blowed), otherwise it doesn't matter
+}
+
+function saveStep() {
+  const board = []
+  for (let i = 0; i < gBoard.length; i++) {
+
+    board.push([])
+    for (let j = 0; j < gBoard[0].length; j++) {
+      board[i][j] = { ...gBoard[i][j] }
+    }
+  }
+  gGameSteps.push(board)
 }
 
 /**

@@ -1,16 +1,13 @@
 'use strict'
 
 function placeMines(board) {
-  // making one array contains all objects(cell object)
-  const allCells = []
-  for (let i = 0; i < board.length; i++) {
-    allCells.push( ...board[i] )
-  }
-
+  const allCells = getCellsFromMat(board)
   var minesLeft = gLevel.MINES
+
   while (minesLeft > 0) {
     const randIdx = getRandomIntInclusive(0, allCells.length - 1)
     const randCell = allCells.splice(randIdx, 1)[0]
+    if (randCell.isShown) continue // skip the first click position
     randCell.isMine = true
     minesLeft--
   }

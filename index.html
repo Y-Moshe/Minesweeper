@@ -10,12 +10,12 @@
     <link rel="icon" type="image/x-icon" href="favicon.png" />
   </head>
 
-  <body onload="initGame()">
+  <body onload="initGame(gBoard)">
     <div class="container">
       <div class="status-bar">
         <div>Live: 3</div>
         <div class="status-btn" onclick="initGame()"></div>
-        <div class="time">Time: 0</div>
+        <div class="time">Time(s): 0</div>
       </div>
 
       <div class="levels">
@@ -23,6 +23,7 @@
         <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
         <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
       </div>
+      <button type="button" onclick="undoStep()">UNDO</button>
 
       <table>
         <tbody class="board"></tbody>
