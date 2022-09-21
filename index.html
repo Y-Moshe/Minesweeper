@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/main.css" />
+    <link rel="icon" type="image/x-icon" href="favicon.png" />
+  </head>
+
+  <body onload="initGame()">
+    <div class="container">
+      <div class="status-bar">
+        <div>Live: 3</div>
+        <div class="status-btn" onclick="initGame()"></div>
+        <div class="time">Time: 0</div>
+      </div>
+
+      <div class="levels">
+        <div class="level active" onclick="onLevelChange(this, 4, 2)">Beginner</div>
+        <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
+        <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
+      </div>
+
+      <table>
+        <tbody class="board"></tbody>
+      </table>
+    </div>
+    
+    <script src="js/utils.js"></script>
+    <script src="js/mines.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+
+</html>

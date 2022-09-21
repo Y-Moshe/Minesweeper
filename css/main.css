@@ -1,0 +1,48 @@
+body {
+  padding: 0;
+  margin: 0;
+}
+
+.container { width: 100%; }
+
+.status-bar {
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 35px;
+  padding: 10px;
+  background: transparent;
+}
+
+.container table {
+  margin: auto;
+  margin-top: 50px;
+}
+
+.cell {
+  width: 48px;
+  height: 48px;
+  border: 2px solid gray;
+  font-size: 24px;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: 0 0 5px gray;
+  transition-duration: 0.3s;
+  border-radius: 3px;
+}
+.cell:hover { background-color: darkgrey; }
+
+.levels {
+  margin: auto;
+  width: 70%;
+}
+
+.active { border: 1px solid red; }
+
+.shown {
+  background-color: darkgrey;
+  color: white;
+  box-shadow: none;
+  border: 2px solid white;
+}
