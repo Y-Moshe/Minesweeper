@@ -2,21 +2,20 @@ body {
   padding: 0;
   margin: 0;
   font-family: cursive;
-  background-repeat: no-repeat;
+  background: url(../assets/images/bg2.png) no-repeat;
+  background-size: cover;
   min-height: 100vh;
+  color: white;
+}
+
+header {
+  font-size: 48px;
+  margin: 25px;
+  color: whitesmoke;
+  text-align: center;
 }
 
 .container { width: 100%; }
-
-.status-bar {
-  border: 1px solid black;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  height: 35px;
-  padding: 10px;
-  background: transparent;
-}
 
 .container table {
   margin: auto;
@@ -26,16 +25,18 @@ body {
 .cell {
   width: 48px;
   height: 48px;
-  border: 2px solid gray;
+  /* background: rgba(255, 255, 255, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.5); */
+  background: rgba(255, 255, 255, 0.5);
+  border: 2px solid rgba(0, 0, 0, 0.4);
   font-size: 24px;
   font-weight: 600;
   text-align: center;
-  box-shadow: 0 0 5px gray;
   transition-duration: 0.3s;
   border-radius: 3px;
   cursor: pointer;
 }
-.cell:hover { background-color: darkgrey; }
+.cell:hover { background: rgba(0, 0, 0, 0.5); }
 
 .status-btn img {
   border-radius: 50%;
@@ -43,13 +44,14 @@ body {
   cursor: pointer;
 }
 
-.levels {
+.controls {
   margin: auto;
-  margin-top: 50px;
   width: 70%;
   text-align: center;
   background: transparent;
 }
+
+.levels { margin-bottom: 10px; }
 
 .level {
   display: inline-block;
@@ -57,21 +59,53 @@ body {
   cursor: pointer;
   border-radius: 10px;
   margin: 5px;
-  border: 2px solid white;
   color: white;
   background: rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(255, 255, 255, 0.4);
   transition-duration: 0.3s;
 }
 .level:hover {
-  background: rgba(0, 0, 0, 0.3);
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid white;
 }
 
-.active { border: 2px solid rgba(0, 0, 0, 0.3); }
+.active { border: 2px solid white; }
 
 .shown {
   background-color: rgba(0, 0, 0, 0.4);
   color: white;
   box-shadow: none;
   border: 2px solid white;
+}
+
+.safe-mark { border: 2px solid orange; }
+
+.blew-up {
+  background-color: red;
+}
+
+.hint-btn span, .safe-btn span {
+  display: block;
+  color: orange;
+}
+
+.controls button {
+  border: none;
+  background: transparent;
+  transition-duration: 0.3s;
+  cursor: pointer;
+}
+
+.controls button:hover {
+  filter: brightness(1.2);
+}
+
+.controls button:disabled {
+  filter: brightness(0.5);
+}
+
+.scores {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }

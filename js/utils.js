@@ -6,25 +6,24 @@ function renderCell(location, value) {
   elCell.innerHTML = value
 }
 
-function getCellIcon(cell) {
-  let icon = cell.isShown ? (cell.minesAroundCount || '') : ''
-  if (cell.isShown && cell.isMine) icon = MINE_ICON
-  else if (cell.isMarked) icon = FLAG_ICON
-
-  return icon
+function convertLvlToLabel(level) {
+  switch (level) {
+    case 12: return 'Expert'
+    case 8: return 'Medium'
+    default:
+      return 'Beginner'
+  }
 }
 
-function getEmptyCells(board) {
-  const cells = []
-  for (let i = 0; i < board.length; i++) {
-    for (let j = 0; j < board[i].length; j++) {
-      if (!board[i][j].trim()) {
-        cells.push({ i, j })
-      }
-    }
-  }
-
-  return cells
+/**
+ * convert seconds to readable time
+ * @param seconds seconds in number, not miliseconds!
+ * @returns readable string like "6min, 4s"
+ */
+function convertSecToTime(seconds) {
+  const minute = Math.floor(seconds / 60)
+  const sec = seconds % 60
+  return minute ? `${minute}min, ${sec}s` : `${sec}s`
 }
 
 /**

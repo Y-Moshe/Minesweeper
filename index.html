@@ -12,27 +12,43 @@
 
   <body onload="initGame()">
     <div class="container">
-      <div class="status-bar">
-        <div>Live: 3</div>
+      <header>💥Minesweeper💥</header>
+      
+      <div class="controls">
         <div class="status-btn" onclick="initGame()"></div>
-        <div class="time">Time(s): 0</div>
-      </div>
 
-      <div class="levels">
-        <div class="level active" onclick="onLevelChange(this, 4, 2)">Beginner</div>
-        <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
-        <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
+        <div class="levels">
+          <div class="level active" onclick="onLevelChange(this, 4, 2)">Beginner</div>
+          <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
+          <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
+        </div>
+
+        <div style="margin-bottom: 10px;">
+          <span class="lives" style="color:red"></span>,
+          <span class="mines"></span>,
+          <span class="flags"></span>,
+          <span class="time">Time: 0</span>
+        </div>
+
+        <button title="Undo" type="button" onclick="undoStep()" class="undo-btn"><img src="assets/images/buttons/undo-48x48.png"></button>
+        <button title="Hint" type="button" onclick="setHint()" class="hint-btn"><img src="assets/images/buttons/hint.png"><span>3</span></button>
+        <button title="Safe-Click" type="button" onclick="safeClick()" class="safe-btn"><img src="assets/images/buttons/safe.png"><span>3</span></button>
+        <button type="button" onclick="setManualMode(this)" class="manual-btn">MANUAL MODE</button>
+        <button type="button" onclick="setMegaHintMode()" class="mega-hint">MEGA HINT</button>
+        <!-- <button type="button" onclick="megaHintClick()" class="mega-btn">MEGA HINT</button> -->
       </div>
-      <button type="button" onclick="undoStep()">UNDO</button>
 
       <table>
         <tbody class="board"></tbody>
       </table>
     </div>
+    <h3 class="scores">BEST SCORES:</h3>
     
     <script src="js/utils.js"></script>
     <script src="js/mines.js"></script>
-    <script src="js/main.js"></script>
+    <script src="js/scores.js"></script>
+    <script src="js/hints.js"></script>
+    <script src="js/game.js"></script>
   </body>
 
 </html>
