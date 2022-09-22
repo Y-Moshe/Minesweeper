@@ -52,5 +52,6 @@ function setMegaHintLocations(i, j) {
     saveStep()
 
     revealMines(gBoard, 'MEGA', 2000)
+    gGame.isMegaHintActive = false
   }
 }

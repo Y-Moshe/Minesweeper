@@ -86,6 +86,7 @@ function renderBoard(board) {
 
           strHTML += `<td class="${className}" style="${style}"
             onclick="cellClicked(this, ${i}, ${j}, true)"
+            onmouseenter="cellEnter(${i}, ${j})"
             oncontextmenu="cellMarked(event, ${i}, ${j})">${getCellIcon(cell)}</td>`
       }
       strHTML += '</tr>'
@@ -141,6 +142,20 @@ function cellMarked(event, i, j) {
   updateFlags()
 
   renderCell({ i, j }, getCellIcon(cell))
+}
+
+function cellEnter(currI, currJ) {
+  if (gGame.isMegaHintActive && gGame.megaHintActiveCount > 0) {
+    const location = gGame.megaHintLocations[0]
+    for (let i = location.s; i <= gBoard.length; i++) {
+      for (let j = location.e; j < gBoard[0].length; j++) {
+        const elCell = document.querySelector(`.cell-${i}-${j}`)
+        elCell && elCell.classList.remove('safe-mark')
+        if (i <= currI && j <= currJ)
+          elCell.classList.add('safe-mark')
+      }
+    }
+  }
 }
 
 function startTimer() {
