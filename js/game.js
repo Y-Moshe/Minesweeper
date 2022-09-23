@@ -15,7 +15,7 @@ var gLevel = {
   SIZE: 4,
   MINES: 2
 }
-var gGameSteps = [] // will store a complete gBoard every time
+var gGameSteps = [] // will store a game state { shownCount, gBoard }
 var initialGameState = {
   isOn: false,
   shownCount: 0,
@@ -106,12 +106,13 @@ function getCellIcon(cell) {
 
 function cellClicked(elCell, i, j, isUserClick = false) {
   if (gGame.isManualMode) return setManualBoard(i, j)
+  
+  isUserClick && saveStep() // save step only if it was a user click, another case click can be from expandShown
   if (gGame.isMegaHintActive) return setMegaHintLocations(i, j)
+  if (gGame.isHintActive) return revealMines(gBoard, 'HINT', 1000, i, j)
 
   const cell = gBoard[i][j]
   if (cell.isShown || cell.isMarked || !gGame.isOn) return
-  isUserClick && saveStep() // save step only if it was a user click, another case click can be from expandShown
-  if (gGame.isHintActive) return revealMines(gBoard, 'HINT', 1000, i, j)
   cell.isShown = true
   if (cell.isMine) return blowMine(cell)
   
@@ -185,11 +186,13 @@ function gameOver() {
 function undoStep() {
   if (gGameSteps.length === 0) return
 
-  const previusBoard = gGameSteps.pop()
-  gGame.shownCount-- // since we shownCount++ on cell click and saveStep there, undo will shownCount--
-  updateStatusBtn() // in case gameOver(Mine blowed), otherwise it doesn't matter
-  gBoard = previusBoard
+  const previousState = gGameSteps.pop()
+  gBoard = previousState.board
+  gGame.shownCount = previousState.shownCount
+
   renderBoard(gBoard)
+  updateStatusBtn() // in case gameOver(Mine blowed), otherwise it doesn't matter
+
   if (!gTimerIntervalId) startTimer() // continue timer in case of mine blow
   gGame.isOn = true // in case gameOver(Mine blowed), otherwise it doesn't matter
 }
@@ -203,7 +206,7 @@ function saveStep() {
       board[i][j] = { ...gBoard[i][j] }
     }
   }
-  gGameSteps.push(board)
+  gGameSteps.push({ shownCount: gGame.shownCount, board })
 }
 
 function expandShown(board, rowIdx, colIdx) {

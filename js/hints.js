@@ -49,7 +49,6 @@ function setMegaHintLocations(i, j) {
       location1.e = location2.s
       location2.s = temp
     }
-    saveStep()
 
     revealMines(gBoard, 'MEGA', 2000)
     gGame.isMegaHintActive = false

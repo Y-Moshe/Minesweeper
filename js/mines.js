@@ -58,7 +58,7 @@ function blowMine(cell) {
  function revealMines(board, type, timeout = 0, i = 0, j = 0) {
   let rowLocation = {}
   let colLocation = {}
-  gGame.shownCount++ // we count revealMines as step because on undo we --step
+
   switch (type) {
     case 'HINT':
       rowLocation.s = i - 1
