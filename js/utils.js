@@ -1,8 +1,10 @@
 'use strict'
 
-// location such as: {i: 2, j: 7}
-function renderCell(location, value) {
-  const elCell = document.querySelector(`.cell-${location.i}-${location.j}`)
+/**
+ * Render element value as innerHTML
+ */
+function renderElValue(selector, value) {
+  const elCell = document.querySelector(selector)
   elCell.innerHTML = value
 }
 

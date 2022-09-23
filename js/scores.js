@@ -8,7 +8,8 @@ function renderScores() {
     strHTML += `<li>${score.level}: ${convertSecToTime(score.score)}</li>`
   }
   strHTML += '</ul>'
-  document.querySelector('.scores').innerHTML = 'BEST SCORES: ' + strHTML;
+
+  renderElValue('.scores', 'BEST SCORES: ' + strHTML)
 }
 
 function getScores() {

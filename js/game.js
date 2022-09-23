@@ -45,8 +45,8 @@ function initGame() {
   renderBoard(gBoard)
   renderScores()
   updateLivesLeft()
-  updateFlags()
-  updateMines(gLevel.MINES)
+  renderElValue('.flags', 'Flags: ' + gGame.markedCount)
+  renderElValue('.mines', 'Mines: ' + gLevel.MINES)
 
   gGame.isOn = true
 }
@@ -92,8 +92,7 @@ function renderBoard(board) {
       strHTML += '</tr>'
   }
   
-  const elBoard = document.querySelector('.board')
-  elBoard.innerHTML = strHTML
+  renderElValue('.board', strHTML)
 }
 
 function getCellIcon(cell) {
@@ -128,7 +127,7 @@ function cellClicked(elCell, i, j, isUserClick = false) {
     }
   }
 
-  renderCell({ i, j }, getCellIcon(cell))
+  renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
   checkGameOver()
 }
 
@@ -140,9 +139,9 @@ function cellMarked(event, i, j) {
 
   cell.isMarked = !cell.isMarked
   cell.isMarked ? gGame.markedCount++ : gGame.markedCount--
-  updateFlags()
 
-  renderCell({ i, j }, getCellIcon(cell))
+  renderElValue('.flags', 'Flags: ' + gGame.markedCount)
+  renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
 
 function cellEnter(currI, currJ) {
@@ -161,8 +160,7 @@ function cellEnter(currI, currJ) {
 
 function startTimer() {
   gTimerIntervalId = setInterval(() => {
-    const elTime = document.querySelector('.time')
-    elTime.innerText = 'Time: ' + convertSecToTime(++gGame.secsPassed)
+    renderElValue('.time', 'Time: ' + convertSecToTime(++gGame.secsPassed))
   }, 1000)
 }
 
@@ -250,8 +248,9 @@ function setManualBoard(i, j) {
   cell.isShown = true
   cell.isMine = !cell.isMine
   cell.isMine ? gGame.manualMinesCount++ : gGame.manualMinesCount--
-  updateMines(gLevel.MINES - gGame.manualMinesCount)
-  renderCell({ i, j }, getCellIcon(cell))
+
+  renderElValue('.mines', 'Mines: ' + gLevel.MINES - gGame.manualMinesCount)
+  renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
 
 /**
@@ -269,23 +268,11 @@ function setManualBoard(i, j) {
       status = SMILE_ICON
   }
 
-  document.querySelector('.status-btn').innerHTML = status
+  renderElValue('.status-btn', status)
 }
 
 function updateLivesLeft() {
-  var strText = ''
-  for (let i = 0; i < gGame.lives; i++) {
-    strText += '❤'
-  }
-  document.querySelector('.lives').innerText = strText
-}
-
-function updateFlags() {
-  document.querySelector('.flags').innerText = 'Flags: ' + gGame.markedCount
-}
-
-function updateMines(number) {
-  document.querySelector('.mines').innerText = 'Mines: ' + number
+  renderElValue('.lives', '❤'.repeat(gGame.lives))
 }
 
 function onLevelChange(elLevel, level, mines) {
