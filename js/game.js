@@ -190,6 +190,7 @@ function undoStep() {
 
   renderBoard(gBoard)
   updateStatusBtn() // in case gameOver(Mine blowed), otherwise it doesn't matter
+  updateUndoDisabled()
 
   if (!gTimerIntervalId) startTimer() // continue timer in case of mine blow
   gGame.isOn = true // in case gameOver(Mine blowed), otherwise it doesn't matter
@@ -204,7 +205,15 @@ function saveStep() {
       board[i][j] = { ...gBoard[i][j] }
     }
   }
+
   gGameSteps.push({ shownCount: gGame.shownCount, board })
+  updateUndoDisabled()
+}
+
+function updateUndoDisabled() {
+  const elUndoBtn = document.querySelector('.undo-btn')
+  gGameSteps.length > 0 ? elUndoBtn.removeAttribute('disabled') :
+    elUndoBtn.setAttribute('disabled', true)
 }
 
 function expandShown(board, rowIdx, colIdx) {
@@ -224,33 +233,6 @@ function expandShown(board, rowIdx, colIdx) {
       }
     }
   }
-}
-
-function setManualMode(elManual) {
-  gGame.isManualMode = !gGame.isManualMode
-  if (gGame.isManualMode) {
-    elManual.classList.add('active')
-  } else {
-    // prepareBoard by change isShown to false
-    for (let i = 0; i < gBoard.length; i++) {
-      for (let j = 0; j < gBoard[0].length; j++) {
-        gBoard[i][j].isShown = false
-        setMinesNegsCount(gBoard, i, j)
-      }
-    }
-    renderBoard(gBoard)
-  }
-}
-
-function setManualBoard(i, j) {
-  const cell = gBoard[i][j];
-  if (gGame.manualMinesCount === gLevel.MINES && !cell.isMine) return
-  cell.isShown = true
-  cell.isMine = !cell.isMine
-  cell.isMine ? gGame.manualMinesCount++ : gGame.manualMinesCount--
-
-  renderElValue('.mines', 'Mines: ' + gLevel.MINES - gGame.manualMinesCount)
-  renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
 
 /**
