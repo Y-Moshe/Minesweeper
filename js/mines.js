@@ -83,8 +83,15 @@ function blowMine(cell) {
   displayMines(board, rowLocation, colLocation)
   timeout && setTimeout(() => {
     undoStep()
-    if (type === 'HINT') gGame.isHintActive = false
-    else if (type === 'MEGA') gGame.isMegaHintActive = false
+    const removeActiveClass = selector =>
+      document.querySelector(selector).classList.remove('active-hint')
+    if (type === 'HINT') {
+      gGame.isHintActive = false
+      removeActiveClass('.hint-btn')
+    } else if (type === 'MEGA') {
+      gGame.isMegaHintActive = false
+      removeActiveClass('.mega-hint')
+    }
   }, timeout)
 }
 
