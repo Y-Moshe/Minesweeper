@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/switch.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
   </head>
@@ -30,12 +31,14 @@
           <span class="time">Time: 0</span>
         </div>
 
-        <button title="Undo" type="button" onclick="undoStep()" class="undo-btn"><img src="assets/images/buttons/undo-48x48.png"></button>
-        <button title="Hint" type="button" onclick="setHint()" class="hint-btn"><img src="assets/images/buttons/hint.png"><span>3</span></button>
-        <button title="Safe-Click" type="button" onclick="safeClick()" class="safe-btn"><img src="assets/images/buttons/safe.png"><span>3</span></button>
-        <button type="button" onclick="setManualMode(this)" class="manual-btn">MANUAL MODE</button>
-        <button type="button" onclick="setMegaHintMode()" class="mega-hint">MEGA HINT</button>
-        <!-- <button type="button" onclick="megaHintClick()" class="mega-btn">MEGA HINT</button> -->
+        <button title="Undo" type="button" onclick="undoStep()" class="undo-btn" disabled><img src="assets/images/buttons/undo.png" /></button>
+        <button title="Hint" type="button" onclick="setHint(this)" class="hint-btn"><img src="assets/images/buttons/hint.png" /><span>3</span></button>
+        <button title="Safe-Click" type="button" onclick="safeClick(this)" class="safe-btn"><img src="assets/images/buttons/safe.png" /><span>3</span></button>
+        <button title="Mega-Hint" type="button" onclick="setMegaHintMode(this)" class="mega-hint"><img src="assets/images/buttons/grid.png" /></button>
+        <label  title="Manual Mode" class="switch">
+          <input class="manual-btn" type="checkbox" onchange="onManualModeChange(this)">
+          <span class="slider round"></span>
+        </label>
       </div>
 
       <table>

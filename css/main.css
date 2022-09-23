@@ -104,6 +104,8 @@ header {
   filter: brightness(0.5);
 }
 
+.active-hint { filter: brightness(1.4); }
+
 .scores {
   position: absolute;
   bottom: 10px;
