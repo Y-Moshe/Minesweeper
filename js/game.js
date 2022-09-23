@@ -40,7 +40,7 @@ var gTimerIntervalId
 function initGame() {
   updateStatusBtn()
 
-  gGame = { ...initialGameState }
+  gGame = { ...initialGameState, megaHintLocations: [] }
   gBoard = buildBoard()
   renderBoard(gBoard)
   renderScores()
