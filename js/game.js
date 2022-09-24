@@ -26,6 +26,8 @@ var initialGameState = {
   isManualMode: false,
   manualMinesCount: 0,
 
+  is7BoomMode: false,
+
   hints: 3,
   isHintActive: false,
   safeClicks: 3,
@@ -119,6 +121,7 @@ function cellClicked(elCell, i, j, isUserClick = false) {
   elCell.classList.add('shown')
   // if cells around not falsy(0) and its not the first click
   if (!cell.minesAroundCount && gGame.shownCount !== 1) expandShown(gBoard, i, j)
+  if (gGame.is7BoomMode) return set7BoomBoard(i, j)
   // on first click, skip on manual
   if (gGame.shownCount === 1) {
     if (gGame.manualMinesCount === 0) { // if manual mode was not set
@@ -128,7 +131,7 @@ function cellClicked(elCell, i, j, isUserClick = false) {
   }
 
   renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
-  checkGameOver()
+  isUserClick && checkGameOver()
 }
 
 function cellMarked(event, i, j) {

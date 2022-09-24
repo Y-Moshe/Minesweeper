@@ -86,3 +86,32 @@ function setManualBoard(i, j) {
   renderElValue('.mines', 'Mines: ' + gLevel.MINES - gGame.manualMinesCount)
   renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
+
+function boom7() {
+  initGame()
+  gGame.is7BoomMode = true
+}
+
+function set7BoomBoard(i, j) {
+  const cells = getCellsFromMat(gBoard)
+  const clickedCell = gBoard[i][j]
+  var countMines = 0
+
+  for (let i = 0; i < cells.length; i++) {
+    if (countMines === gLevel.MINES) break // if we reach max number of mines per board exit
+    const index = i + 1
+    if (index % 10 === 7 || index % 7 === 0) {
+      if (clickedCell === cells[i]) continue // if the first click index contain 7 skip that cell
+      cells[i].isMine = true
+      countMines++
+    }
+  }
+
+  for (let i = 0; i < gBoard.length; i++) {
+    for (let j = 0; j < gBoard[0].length; j++) {
+      setMinesNegsCount(gBoard, i, j)
+    }
+  }
+  gGame.is7BoomMode = false
+  renderBoard(gBoard)
+}

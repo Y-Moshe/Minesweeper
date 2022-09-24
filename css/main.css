@@ -111,3 +111,11 @@ header {
   bottom: 10px;
   left: 10px;
 }
+
+.boom7-btn {
+  height: 48px;
+  background: linear-gradient(to top right, red, blue) !important;
+  border: 2px solid white !important;
+  border-radius: 50%;
+  color: white;
+}
