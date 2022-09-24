@@ -88,7 +88,8 @@ function renderBoard(board) {
 
           strHTML += `<td class="${className}" style="${style}"
             onclick="cellClicked(this, ${i}, ${j}, true)"
-            onmouseenter="cellEnter(${i}, ${j})"
+            onmouseenter="onCellEnter(${i}, ${j})"
+            onmouseleave="onCellLeave(${i}, ${j})"
             oncontextmenu="cellMarked(event, ${i}, ${j})">${getCellIcon(cell)}</td>`
       }
       strHTML += '</tr>'
@@ -147,15 +148,44 @@ function cellMarked(event, i, j) {
   renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
 
-function cellEnter(currI, currJ) {
+function onCellEnter(currI, currJ) {
+  if (gGame.isHintActive) {
+    for (let i = currI - 1; i <= currI + 1; i++) {
+      if (i < 0 || i >= gBoard.length) continue
+
+      for (let j = currJ - 1; j <= currJ + 1; j++) {
+        if (j < 0 || j >= gBoard[0].length) continue
+
+        const elCell = document.querySelector(`.cell-${i}-${j}`)
+        elCell.classList.add('safe-mark')
+      }
+    }
+    return
+  }
+
   if (gGame.isMegaHintActive && gGame.megaHintActiveCount > 0) {
     const location = gGame.megaHintLocations[0]
-    for (let i = location.s; i <= gBoard.length; i++) {
+    for (let i = location.s; i < gBoard.length; i++) {
       for (let j = location.e; j < gBoard[0].length; j++) {
         const elCell = document.querySelector(`.cell-${i}-${j}`)
         elCell && elCell.classList.remove('safe-mark')
         if (i <= currI && j <= currJ)
           elCell.classList.add('safe-mark')
+      }
+    }
+  }
+}
+
+function onCellLeave(currI, currJ) {
+  if (gGame.isHintActive) {
+    for (let i = currI - 1; i <= currI + 1; i++) {
+      if (i < 0 || i >= gBoard.length) continue
+
+      for (let j = currJ - 1; j <= currJ + 1; j++) {
+        if (j < 0 || j >= gBoard[0].length) continue
+
+        const elCell = document.querySelector(`.cell-${i}-${j}`)
+        elCell.classList.remove('safe-mark')
       }
     }
   }
