@@ -42,13 +42,6 @@ header {
   cursor: pointer;
 }
 
-.controls {
-  margin: auto;
-  width: 70%;
-  text-align: center;
-  background: transparent;
-}
-
 .levels { margin-bottom: 10px; }
 
 .level {
@@ -62,6 +55,7 @@ header {
   border: 2px solid rgba(255, 255, 255, 0.4);
   transition-duration: 0.3s;
 }
+
 .level:hover {
   background: rgba(0, 0, 0, 0.5);
   border: 2px solid white;
@@ -78,42 +72,10 @@ header {
 
 .safe-mark { border: 2px solid orange; }
 
-.blew-up {
-  background-color: red;
-}
-
-.hint-btn span, .safe-btn span {
-  display: block;
-  color: orange;
-}
-
-.controls button {
-  border: none;
-  background: transparent;
-  transition-duration: 0.3s;
-  cursor: pointer;
-}
-
-.controls button:hover {
-  filter: brightness(1.2);
-}
-
-.controls button:disabled {
-  filter: brightness(0.5);
-}
-
-.active-hint { filter: brightness(1.4); }
+.blew-up { background-color: red; }
 
 .scores {
   position: absolute;
   bottom: 10px;
   left: 10px;
-}
-
-.boom7-btn {
-  height: 48px;
-  background: linear-gradient(to top right, red, blue) !important;
-  border: 2px solid white !important;
-  border-radius: 50%;
-  color: white;
 }
