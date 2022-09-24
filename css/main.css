@@ -2,7 +2,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: cursive;
-  background: url(../assets/images/bg2.png) no-repeat;
+  background: url(../assets/images/background.png) no-repeat;
   background-size: cover;
   min-height: 100vh;
   color: white;
@@ -25,8 +25,6 @@ header {
 .cell {
   width: 56px;
   height: 56px;
-  /* background: rgba(255, 255, 255, 0.1);
-  border: 2px solid rgba(255, 255, 255, 0.5); */
   background: rgba(255, 255, 255, 0.5);
   border: 2px solid rgba(0, 0, 0, 0.4);
   font-size: 24px;
