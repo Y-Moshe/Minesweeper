@@ -115,3 +115,54 @@ function set7BoomBoard(i, j) {
   gGame.is7BoomMode = false
   renderBoard(gBoard)
 }
+
+function exterminator() {
+  saveStep()
+  const MINES_TO_ELIMINATE = 3
+  const minesToElimate = getRandomMines(MINES_TO_ELIMINATE)
+
+  for (let index = 0; index < minesToElimate.length; index++) {
+    const mineLocation = minesToElimate[index].location // { i, j }
+    const cell = minesToElimate[index].cell // cell object { isMine, ... }
+    cell.isMine = false // elminate
+    cell.isShown = true
+    gGame.shownCount++
+
+    // run on his negs and update its minesAroundCount prop
+    for (let i = mineLocation.i - 1; i <= mineLocation.i + 1; i++) {
+      if (i < 0 || i >= gBoard.length) continue
+
+      for (let j = mineLocation.j - 1; j <= mineLocation.j + 1; j++) {
+        if (j < 0 || j >= gBoard[0].length) continue
+
+        setMinesNegsCount(gBoard, i, j)
+      }
+    }
+  }
+
+  const minesLeft = gLevel.MINES - MINES_TO_ELIMINATE
+  gLevel.MINES = minesLeft < 0 ? 0 : minesLeft
+  renderElValue('.mines', 'Mines: ' + gLevel.MINES)
+  renderBoard(gBoard)
+}
+
+function getRandomMines(amount) {
+  const mines = [] // [{ location: { i, j }, cell }]
+
+  for (let i = 0; i < gBoard.length; i++) {
+    for (let j = 0; j < gBoard[0].length; j++) {
+      const currCell = gBoard[i][j]
+      if (!currCell.isShown && currCell.isMine)
+        mines.push({ location: { i, j }, cell: currCell })
+    }
+  }
+
+  const randomMines = []
+  for (let i = 0; i < amount; i++) {
+    const randIdx = getRandomIntInclusive(0, mines.length - 1)
+    const randMine = mines.splice(randIdx, 1)[0]
+    randMine && randomMines.push(randMine)
+  }
+
+  return randomMines
+}
