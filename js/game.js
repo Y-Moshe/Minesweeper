@@ -165,12 +165,21 @@ function onCellEnter(currI, currJ) {
 
   if (gGame.isMegaHintActive && gGame.megaHintActiveCount > 0) {
     const location = gGame.megaHintLocations[0]
-    for (let i = location.s; i < gBoard.length; i++) {
-      for (let j = location.e; j < gBoard[0].length; j++) {
+
+    let startI = location.s
+    let endI = 0
+    if (currI > startI) endI = currI
+    else [startI, endI] = [currI, startI]
+  
+    let startJ = location.e
+    let endJ = 0
+    if (currJ > startJ) endJ = currJ
+    else [startJ, endJ] = [currJ, startJ]
+    
+    for (let i = startI; i <= endI; i++) {
+      for (let j = startJ; j <= endJ; j++) {
         const elCell = document.querySelector(`.cell-${i}-${j}`)
-        elCell && elCell.classList.remove('safe-mark')
-        if (i <= currI && j <= currJ)
-          elCell.classList.add('safe-mark')
+        elCell && elCell.classList.add('safe-mark')
       }
     }
   }
@@ -186,6 +195,15 @@ function onCellLeave(currI, currJ) {
 
         const elCell = document.querySelector(`.cell-${i}-${j}`)
         elCell.classList.remove('safe-mark')
+      }
+    }
+  }
+
+  if (gGame.isMegaHintActive && gGame.megaHintActiveCount > 0) {
+    for (let i = 0; i < gBoard.length; i++) {
+      for (let j = 0; j < gBoard[0].length; j++) {
+        const elCell = document.querySelector(`.cell-${i}-${j}`)
+        elCell && elCell.classList.remove('safe-mark')
       }
     }
   }

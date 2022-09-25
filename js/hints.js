@@ -48,10 +48,19 @@ function setMegaHintLocations(i, j) {
   if (gGame.megaHintActiveCount === 2) {
     const location1 = gGame.megaHintLocations[0]
     const location2 = gGame.megaHintLocations[1]
+
     if (location1.s < location2.s) {
-      const temp = location1.e
-      location1.e = location2.s
-      location2.s = temp
+      if (location1.e < location2.e) {
+        [location1.e, location2.s] = [location2.s, location1.e]
+      } else {
+        [location1.e, location2.s, location2.e] = [location2.s, location2.e, location1.e]
+      }
+    } else {
+      if (location1.e < location2.e) {
+        [location1.s, location1.e, location2.s] = [location2.s, location1.s, location1.e]
+      } else {
+        [location1.s, location1.e, location2.s, location2.e] = [location2.s, location1.s, location2.e, location1.e]
+      }
     }
 
     revealMines(gBoard, 'MEGA', 2000)
