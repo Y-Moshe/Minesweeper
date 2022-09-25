@@ -6,47 +6,64 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Minesweeper</title>
+    <link rel="stylesheet" href="css/cell.css" />
+    <link rel="stylesheet" href="css/board.css" />
     <link rel="stylesheet" href="css/switch.css" />
-    <link rel="stylesheet" href="css/buttons.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="icon" type="image/x-icon" href="favicon.png" />
   </head>
 
   <body onload="initGame()">
-    <div class="container">
-      <header>💥Minesweeper💥</header>
-      
-      <div class="controls">
-        <div class="status-btn" onclick="initGame()"></div>
+    <header>💥Minesweeper💥</header>
+    
+    <div class="controls">
+      <div class="status-btn" onclick="initGame()"></div>
 
-        <div class="levels">
-          <div class="level active" onclick="onLevelChange(this, 4, 2)">Beginner</div>
-          <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
-          <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
-        </div>
-
-        <div style="margin-bottom: 10px;">
-          <span class="lives" style="color:red"></span>,
-          <span class="mines"></span>,
-          <span class="flags"></span>,
-          <span class="time">Time: 0</span>
-        </div>
-
-        <button title="Undo" type="button" onclick="undoStep()" class="undo-btn" disabled><img src="assets/images/buttons/undo.png" /></button>
-        <button title="Hint" type="button" onclick="setHint(this)" class="hint-btn"><img src="assets/images/buttons/hint.png" /><span>3</span></button>
-        <button title="Safe-Click" type="button" onclick="safeClick(this)" class="safe-btn"><img src="assets/images/buttons/safe.png" /><span>3</span></button>
-        <button title="Mega-Hint" type="button" onclick="setMegaHintMode(this)" class="mega-hint"><img src="assets/images/buttons/grid.png" /></button>
-        <label title="Manual Mode" class="switch">
-          <input class="manual-btn" type="checkbox" onchange="onManualModeChange(this)">
-          <span class="slider round"></span>
-        </label>
-        <button title="7-Boom" type="button" onclick="boom7()" class="boom7-btn">7-Boom!</button>
-        <button title="Exterminator" type="button" onclick="exterminator()" class="exterminator-btn">Exterminator</button>
+      <div class="levels">
+        <div class="level active" onclick="onLevelChange(this, 4, 2)">Beginner</div>
+        <div class="level" onclick="onLevelChange(this, 8, 14)">Medium</div>
+        <div class="level" onclick="onLevelChange(this, 12, 32)">Expert</div>
       </div>
 
+      <div style="margin-bottom: 10px;">
+        <span class="lives" style="color:red"></span>,
+        <span class="mines"></span>,
+        <span class="flags"></span>,
+        <span class="time">Time: 0</span>
+      </div>
+
+      <div class="dark-mode">
+        <label>Dark Mode</label>
+        <label title="Dark Mode" class="switch">
+          <input class="darkmode-btn" type="checkbox" onchange="onDarkModeChange(this)">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    
+    <div class="board-container">
+      <div class="left-board">
+        <button type="button" title="Undo" onclick="undoStep()" class="undo-btn" disabled><img src="assets/images/buttons/undo.png" /></button>
+        <button type="button" title="Hint" onclick="setHint(this)" class="hint-btn"><img src="assets/images/buttons/hint.png" /><span>3</span></button>
+        <button type="button" title="Safe-Click" onclick="safeClick(this)" class="safe-btn"><img src="assets/images/buttons/safe.png" /><span>3</span></button>
+        <button type="button" title="Mega-Hint" onclick="setMegaHintMode(this)" class="mega-hint"><img src="assets/images/buttons/grid.png" /></button>
+      </div>
+      
       <table>
         <tbody class="board"></tbody>
       </table>
+      
+      <div class="right-board">
+        <div class="manual-mode">
+          <label>Manual Mode</label>
+          <label title="Manual Mode" class="switch">
+            <input class="manual-btn" type="checkbox" onchange="onManualModeChange(this)">
+            <span class="slider round"></span>
+          </label>
+        </div>
+        <button title="7-Boom" type="button" onclick="boom7()" class="boom7-btn">7-Boom!</button>
+        <button title="Exterminator" type="button" onclick="exterminator()" class="exterminator-btn">Exterminator</button>
+      </div>
     </div>
     <h3 class="scores">BEST SCORES:</h3>
     

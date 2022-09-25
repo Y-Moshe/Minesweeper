@@ -1,0 +1,80 @@
+.board-container {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 25px;
+}
+
+.board-container table {
+  align-self: flex-start;
+}
+
+/* Left side of the board */
+
+.left-board {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px;
+  width: 100px
+}
+
+.left-board button {
+  border: 2px solid transparent;
+  background: transparent;
+  transition-duration: 0.3s;
+  cursor: pointer;
+  margin: 5px 0;
+}
+
+.left-board button:hover {
+  filter: brightness(1.2);
+}
+
+.left-board button:disabled {
+  filter: brightness(0.5);
+}
+
+.hint-btn span, .safe-btn span {
+  display: block;
+  color: orange;
+}
+
+.active-hint {
+  border: 2px solid white !important;
+  border-radius: 50%;
+}
+
+/* Right side of the board */
+
+.right-board {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  width: 100px;
+}
+
+.right-board > * {
+  margin: 5px 0;
+}
+
+.manual-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.boom7-btn {
+  height: 48px;
+  background: linear-gradient(to top right, red, blue);
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+}
+
+.exterminator-btn {
+  height: 48px;
+  background: linear-gradient(to top right, #7C0A02, #B22222, #E25822, #F1BC31, #F6F052);
+  border: 2px solid white;
+  border-radius: 50%;
+  color: white;
+}
