@@ -69,6 +69,21 @@ function setMegaHintLocations(i, j) {
   }
 }
 
+function onDarkModeChange(elDarkMode) {
+  gGame.isDarkMode = elDarkMode.checked
+  if (gGame.isDarkMode) {
+    document.body.style.background = `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    url(../assets/images/background.png) no-repeat
+    `
+    document.body.style.backgroundSize = 'cover'
+  } else {
+    document.body.style.background = 'url(../assets/images/background.png) no-repeat'
+    document.body.style.backgroundSize = 'cover'
+  }
+
+  renderBoard(gBoard)
+}
+
 function onManualModeChange(elManual) {
   gGame.isManualMode = elManual.checked
   if (gGame.isManualMode) {

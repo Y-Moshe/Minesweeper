@@ -27,6 +27,7 @@ var initialGameState = {
   manualMinesCount: 0,
 
   is7BoomMode: false,
+  isDarkMode: false,
 
   hints: 3,
   isHintActive: false,
@@ -83,13 +84,20 @@ function renderBoard(board) {
       strHTML += '<tr>'
       for (var j = 0; j < board[0].length; j++) {
           const cell = board[i][j]
-          let className = `cell cell-${i}-${j} ${cell.isShown ? 'shown' : ''}`
-          const style = cell.isBlewed ? 'border: 2px solid red' : ''
+          
+          let themeClass = 'cell-light'
+          let shownClass = 'shown shown-light'
+          if (gGame.isDarkMode) {
+            themeClass = 'cell-dark'
+            shownClass = 'shown shown-dark'
+          }
+          const className = `cell cell-${i}-${j} ${themeClass} ${cell.isShown ? shownClass : ''}`
+          const style = cell.isBlewed ? 'border: 2px solid red;' : ''
 
           strHTML += `<td class="${className}" style="${style}"
             onclick="cellClicked(this, ${i}, ${j}, true)"
-            onmouseenter="onCellEnter(${i}, ${j})"
-            onmouseleave="onCellLeave(${i}, ${j})"
+            onmouseenter="onCellEnter(this, ${i}, ${j})"
+            onmouseleave="onCellLeave(this, ${i}, ${j})"
             oncontextmenu="cellMarked(event, ${i}, ${j})">${getCellIcon(cell)}</td>`
       }
       strHTML += '</tr>'
@@ -119,7 +127,7 @@ function cellClicked(elCell, i, j, isUserClick = false) {
   if (cell.isMine) return blowMine(cell)
   
   gGame.shownCount++
-  elCell.classList.add('shown')
+  elCell.classList.add('shown', gGame.isDarkMode ? 'shown-dark' : 'shown-light')
   // if cells around not falsy(0) and its not the first click
   if (!cell.minesAroundCount && gGame.shownCount !== 1) expandShown(gBoard, i, j)
   if (gGame.is7BoomMode) return set7BoomBoard(i, j)
@@ -148,7 +156,8 @@ function cellMarked(event, i, j) {
   renderElValue(`.cell-${i}-${j}`, getCellIcon(cell))
 }
 
-function onCellEnter(currI, currJ) {
+function onCellEnter(elCell, currI, currJ) {
+  elCell.classList.add(gGame.isDarkMode ? 'cell-hover-dark' : 'cell-hover-light')
   if (gGame.isHintActive) {
     for (let i = currI - 1; i <= currI + 1; i++) {
       if (i < 0 || i >= gBoard.length) continue
@@ -185,7 +194,8 @@ function onCellEnter(currI, currJ) {
   }
 }
 
-function onCellLeave(currI, currJ) {
+function onCellLeave(elCell, currI, currJ) {
+  elCell.classList.remove(gGame.isDarkMode ? 'cell-hover-dark' : 'cell-hover-light')
   if (gGame.isHintActive) {
     for (let i = currI - 1; i <= currI + 1; i++) {
       if (i < 0 || i >= gBoard.length) continue
